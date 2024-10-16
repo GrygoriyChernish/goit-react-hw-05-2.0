@@ -1,42 +1,26 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
-import {useAxiosOptions} from "../../hooks/useAxiosOptions.js";
-import {wrapper, linksWrapper} from './MovieDetails.module.css'
-import {Link} from "react-router-dom";
+import useGetData from "../../hooks/useGetData.js";
+
+import { wrapper, linksWrapper } from './MovieDetails.module.css'
 
 
-const MovieDetails = ({movieId}) => {
-    const [movie, setMovie] = useState(null);
-    useEffect(() => {
-        const controller = new AbortController();
-        const options = useAxiosOptions(controller.signal);
-        async function getMoviesDetails() {
-            const {data} = await axios(`movie/${movieId}`, options);
-            setMovie(data);
-        }
-        try {
-            getMoviesDetails().catch((error) => {
-                console.log(error.message);});
-        } catch (error) {
-            console.log(error);
-        }
-        return ()=>{
-            controller.abort();
-        }
-    }, [])
+
+
+const MovieDetails = () => {
+    const { poster_path, original_title, id, release_date, overview, genres } = useGetData('details')
     return <>
-        {movie && <div className={wrapper}>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.original_title}/>
+        {id && <div className={wrapper}>
+            <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={original_title}/>
             <div>
-                <h3>{movie.original_title} ({movie.release_date})</h3>
+                <h3>{original_title} ({release_date})</h3>
                 <p>Overview</p>
-                <p>{movie.overview}</p>
+                <p>{overview}</p>
                 <p>Genres</p>
-                <p>{movie.genres.map(({name}) => name).join(' ')}</p>
+                <p>{genres.map(({name}) => name).join(' ')}</p>
             </div>
         </div>}
-        {movie && <div className={linksWrapper}>
+        {id && <div className={linksWrapper}>
             <h3>Additional information</h3>
             <ul>
                 <li>

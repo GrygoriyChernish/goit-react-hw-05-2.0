@@ -1,14 +1,14 @@
-import {Link, Outlet, useParams} from "react-router-dom";
-import {Suspense} from "react";
+import { Link, Outlet } from "react-router-dom";
+import { Suspense } from "react";
 import MovieDetails from "../../components/MovieDetails/MovieDetails.jsx";
 
 
 const MovieDetailsPage = () => {
-    const {movieId} = useParams();
+
 
     return (<>
         <Link to='/'>Go back</Link>
-        <MovieDetails movieId={movieId}/>
+        <MovieDetails/>
         <Suspense fallback={<div>Loading subpage...</div>}>
             <Outlet/>
         </Suspense>
