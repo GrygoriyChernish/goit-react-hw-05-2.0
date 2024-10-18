@@ -22,6 +22,9 @@ const useGetData = (url) => {
         case 'reviews':
             searchUrl = `movie/${movieId}/reviews`;
             break;
+        case 'search':
+            searchUrl = `search/movie?${searchQuery}`;
+            break;
         default:
             searchUrl = '';
     }
